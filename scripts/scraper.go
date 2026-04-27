@@ -17,6 +17,7 @@ type Lead struct {
 	Rating  string
 }
 
+
 func ScrapeLeads(searchQuery string) ([]Lead, error) {
 	// 1. Setup Stealth Context
 	fmt.Println("Starting ScrapeLeads func")
@@ -47,10 +48,9 @@ func ScrapeLeads(searchQuery string) ([]Lead, error) {
 		// Wait for the result list to load
 		chromedp.Sleep(5 * time.Second),)
 		
-
 		if err != nil {return nil, err }
 
-		for i := 0; i < 10; i++ {
+		for i := 0; i < 2; i++ { // use i < 10
     		fmt.Printf("Deep Scroll Cycle %d...\n", i+1)
     		err = chromedp.Run(ctx,
         		// Target the 'feed' role specifically and scroll it down 2000 pixels
@@ -63,6 +63,7 @@ func ScrapeLeads(searchQuery string) ([]Lead, error) {
 		}
 
 		// After your scrolling is done
+		var seen = make(map[string]bool)
 		var leadNodes []*cdp.Node
 		if err = chromedp.Run(ctx, chromedp.Nodes(`div[role="article"]`, &leadNodes, chromedp.ByQueryAll)); err != nil {
 			return nil, err
@@ -70,55 +71,57 @@ func ScrapeLeads(searchQuery string) ([]Lead, error) {
 
 		for i, _ := range leadNodes {
     		var name, phone, website string
-    		sel := fmt.Sprintf(`(//div[@role="article"])[%d]//a[@class="hfpxzc"]`, i+1) // XPath is safer here
+			containerSel := fmt.Sprintf(`(//div[@role="article"])[%d]`, i+1)
+			linkSel := containerSel + `//a[@class="hfpxzc"]`
+
+			fmt.Printf("Analyzing Lead %d/%d...\n", i+1, len(leadNodes))
     
     		err = chromedp.Run(ctx,
-        		chromedp.Click(sel, chromedp.BySearch),
-        		chromedp.Sleep(2 * time.Second), // Wait for the side panel to slide out
+				chromedp.ScrollIntoView(containerSel, chromedp.BySearch),
+				chromedp.Sleep(500 * time.Millisecond),
+        		chromedp.Click(linkSel, chromedp.BySearch),
+        		chromedp.Sleep(10000 * time.Millisecond), // Wait for the side panel to slide out
         		// Target the phone number specifically in the side panel
         		chromedp.Evaluate(`
             		(() => {
-                		const name = document.querySelector('h1.DUwDvf')?.innerText || "";
+					 	const panelName = document.querySelector('h1.DUwDvf')?.innerText || "";	
                 		const phone = document.querySelector('button[data-tooltip*="phone"], button[data-value*="Phone"]')?.innerText || "";
-                		const web = document.querySelector('a[data-tooltip*="website"], a[data-value*="Website"]')?.href || "";
-                		return { name, phone, web };
+						const websiteElem = document.querySelector('a.CsEnBe[data-tooltip*="website"], a.CsEnBe[data-value*="Website"]');
+        				let web = "";
+
+						if (websiteElem){
+							web = websiteElem.href;
+						}
+                		return { name: panelName, phone, web };
             		})()
         		`, &struct {
 					Name	*string `json:"name"`
 					Phone	*string `json:"phone"`
-					Web	*string `json:"web"`
+					Web		*string `json:"web"`
 				}{&name, &phone, &website}),
     		)
     		// Save lead data here...
+			if err == nil && name != "" {
+				fingerprint := phone
+				if phone == "" {
+					fingerprint = name
+				}
+				if !seen[fingerprint] {
+					seen[fingerprint] = true
+					leads = append(leads, Lead{
+						Name: name,
+						Phone: phone,
+						Website: website,
+					})
+					fmt.Printf("Successfully Captured: %s\n", name)
+					fmt.Printf("Captured - Name: %s | Phone: %s | Web: %s\n", name, phone, website)
+				}else{
+					fmt.Printf(">>>Skipping Duplicate... %s\n", fingerprint)
+				}
+			}
 		}
 
-	err = chromedp.Run(ctx,
-		chromedp.Evaluate(`
-    		Array.from(document.querySelectorAll('div[role="article"]')).map(e => {
-        		// Find the Name: usually inside an aria-label or a specific class
-        		const nameLink = e.querySelector('a.hfpxzc');
-        		const name = nameLink ? nameLink.getAttribute('aria-label') : "";
-
-        		// Find the Website: Look for the specific icon-based link
-        		const websiteLink = e.querySelector('a[data-value*="Website"]');
-        		const website = websiteLink ? websiteLink.href : "";
-
-        		// Find the Phone: Harder to find, usually in a specific div
-        		const phoneElem = e.querySelector('span[class*="Usd1k"]'); // Or look for text with /+234/
-        		const phone = phoneElem ? phoneElem.innerText : "";
-
-        		return {
-            		name: name,
-            		phone: phone,
-            		website: website,
-            		rating: "" // We can pull this later
-        		};
-    		}).filter(lead => lead.name !== "") // Remove empty artifacts
-	`, &leads),
-		chromedp.Sleep(50* time.Second),
-	)
-	fmt.Println("This is the leads: ", leads)
-
+	fmt.Printf(">>> This is the leads: %s", leads)
 	return leads, err
 }
 
@@ -155,7 +158,7 @@ func GetRandomstealthOpts() []chromedp.ExecAllocatorOption {
 		chromedp.WindowSize(res[0], res[1]),
 		chromedp.Flag("disable-blink-features", "AutomationControlled"),
 		chromedp.Flag("use-fake-ui-for-media-stream", true),
-		chromedp.Flag("headless", false),
+		chromedp.Flag("headless", true), // Change to false to see the bot scrape in real-time
 		chromedp.UserAgent(getRandomUA()), // Function to return a random Chrome UA
 	)
 }
@@ -169,3 +172,4 @@ func getRandomUA() string {
 	}
 	return uas[time.Now().UnixNano()%int64(len(uas))]
 }
+
