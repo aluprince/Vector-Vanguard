@@ -2,53 +2,82 @@ package scripts
 
 import (
 	"crypto/tls"
+	"fmt"
+	"io"         // Need this to read the body
+	"net"        // REQUIRED for net.OpError
 	"net/http"
-	//"regexp"
 	"strings"
 	"time"
 )
 
 type AuditReport struct {
-	URL          string  `json:"url"`
-	SSLExpired   bool    `json:"ssl_expired"`
-	LoadTimeSec  float64 `json:"load_time"`
-	OutdatedCopy bool    `json:"outdated_copyright"`
-	NoWebsite    bool    `json:"no_website"`
+	URL              string  `json:"url"`
+	SSLExpired       bool    `json:"ssl_expired"`
+	LoadTimeSec      float64 `json:"load_time"`
+	OutdatedCopy     bool    `json:"outdated_copyright"`
+	NoWebsite        bool    `json:"no_website"`
+	FailureReason    string  `json:"failure_reason"`
+	IsBroken         bool    `json:"is_broken"`
+	StatusCode       int     `json:"status_code"`
 }
 
 func PerformAudit(targetURL string) AuditReport {
 	if targetURL == "" {
-		return AuditReport{NoWebsite: true}
+		return AuditReport{NoWebsite: true, FailureReason: "No URL Provided"}
 	}
 
 	report := AuditReport{URL: targetURL}
 	start := time.Now()
 
-	// 1. Check SSL & Connectivity
+	// 1. Setup Client
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: 15 * time.Second,
 		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // We want to see if it's broken
+			// We keep this false initially to detect SSL issues
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
 		},
 	}
 
 	resp, err := client.Get(targetURL)
+	
+	// Handle Connection Errors
 	if err != nil {
-		report.SSLExpired = true
+		report.IsBroken = true
+		if strings.Contains(err.Error(), "x509") || strings.Contains(err.Error(), "certificate") {
+			report.SSLExpired = true
+			report.FailureReason = "SSL/Certificate Error"
+		} else if dnsErr, ok := err.(*net.OpError); ok {
+			if strings.Contains(dnsErr.Error(), "no such host") {
+				report.FailureReason = "Domain Expired/DNS Failure"
+			} else {
+				report.FailureReason = "Server Down/Connection Refused"
+			}
+		} else {
+			report.FailureReason = "Timeout/Network Error"
+		}
 		return report
 	}
 	defer resp.Body.Close()
 
-	// 2. Load Time
+	// 2. Load Time Calculation
 	report.LoadTimeSec = time.Since(start).Seconds()
+	report.StatusCode = resp.StatusCode
 
-	// 3. Copyright Check (The "Abandonment" Signal)
-	// We read the body and look for 2023, 2024, or 2025
+	// 3. Read Body for Copyright Check
+	bodyBytes, _ := io.ReadAll(resp.Body)
+	bodySnippet := string(bodyBytes)
+	
 	currentYear := "2026"
-	// Simplified: in real code, read body into string
-	bodySnippet := "Copyright © 2024" 
-	if strings.Contains(bodySnippet, "©") && !strings.Contains(bodySnippet, currentYear) {
-		report.OutdatedCopy = true
+	// Check if page contains copyright but not the current year
+	if strings.Contains(bodySnippet, "©") || strings.Contains(bodySnippet, "Copyright") {
+		if !strings.Contains(bodySnippet, currentYear) {
+			report.OutdatedCopy = true
+		}
+	}
+
+	if resp.StatusCode >= 400 {
+		report.IsBroken = true
+		report.FailureReason = fmt.Sprintf("HTTP %d Error", resp.StatusCode)
 	}
 
 	return report
