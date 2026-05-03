@@ -10,9 +10,8 @@ from aiogram.filters import CommandStart
 from aiogram.types import CallbackQuery, Message
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-# from quantora.discord_bot import bot
-# from agents.normalizer import distribute_leads
 from agents.prompts import generate_pitches, intro_verification_greetings
+from aiohttp import web
 
 load_dotenv(find_dotenv())
 
@@ -20,13 +19,12 @@ load_dotenv(find_dotenv())
 # Bot token can be obtained via https://t.me/BotFather
 TOKEN = os.getenv("BOT_TOKEN")
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-leads = generate_pitches()
+leads = [] # This will hold the leads data received from Go
 leads_length = len(leads)
 
 # All handlers should be attached to the Router (or Dispatcher)
 dp = Dispatcher()
-users = set()
-
+users = set() 
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
@@ -112,13 +110,36 @@ async def broadcast_leads():
                 pass
         await asyncio.sleep(10)
 
-
-
-async def main() -> None:    
+async def handle_webhook(request):
+    """This receives the JSON from Go"""
+    global leads, leads_length
+    data = await request.json()
+    print(f"📥 Received {len(data)} leads from Go!")
+    
+    # Run the pitch generation logic on the new data
+    # Note: Modify prompts.py to accept data as an argument instead of reading file
+    leads = generate_pitches(data) 
+    leads_length = len(leads)
+    
+    # Trigger the broadcast immediately
     asyncio.create_task(broadcast_leads())
-    # And the run events dispatching
-    await dp.start_polling(bot)
+    
+    return web.Response(text="Leads received and processing started")
 
+
+async def main() -> None:
+    # Setup the Webhook Server
+    app = web.Application()
+    app.router.add_post('/new_leads', handle_webhook)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, 'localhost', 5000)
+    
+    # Start the Web Server and the Bot Polling together
+    await asyncio.gather(
+        site.start(),
+        dp.start_polling(bot)
+    )
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)

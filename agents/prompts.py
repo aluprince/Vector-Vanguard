@@ -8,8 +8,8 @@ import random
 
 load_dotenv(find_dotenv())
 
-groq_api_key = os.getenv("GROQ_API_KEY_3")
-model = os.getenv("AI_MODEL")
+groq_api_key = os.getenv("GROQ_API_KEY_44")
+model = os.getenv("AI_MODEL_2")
 
 # passing the audit data and business name into the prompt template
 template = """
@@ -41,9 +41,9 @@ YOUR TURN:
 llm = ChatGroq(temperature=0.7, model_name=model, groq_api_key=groq_api_key)
 
 # Opening the Json Schema file and loading it into a variable
-def generate_pitches():
-    with open("final_audit.json", "r") as file:
-        audit_data = json.load(file)
+def generate_pitches(audit_data):
+    # with open("final_audit.json", "r") as file:
+    #     audit_data = json.load(file)
     
         leads_dict = []
 
@@ -79,13 +79,13 @@ def generate_pitches():
 
 def intro_verification_greetings(name):
     intros = [
-    f"Hi, am I speaking with the manager of {name}?",
+    f"Hi, I'm I speaking with the manager of {name}?",
     f"Hello! Is this the official line for {name} shortlets?",
     f"Hey, quick one—do you guys handle the bookings for {name}?",
     f"Good day, wanted to confirm if this is {name} in Lagos?"
 ]
     if name == "Unknown Business" or name == "" or name is None:
-        return "Hi, am I speaking with the manager of this business?"
+        return "Hi, I'm I speaking with the manager?"
     selected_intro = random.choice(intros)
 
     return selected_intro

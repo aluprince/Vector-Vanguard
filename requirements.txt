@@ -4,7 +4,8 @@ playwright>=1.49.0        # The "Hands" of the operation
 playwright-stealth>=1.2.0  # ESSENTIAL: Bypasses navigator.webdriver detection
 
 # --- The Brain (LLM) ---
-langchain>=0.3.0          
+langchain>=0.3.0    
+langchain-groq      
 ollama>=0.4.0             
 python-dotenv>=1.0.1      # For your .env secrets
 
@@ -12,3 +13,4 @@ python-dotenv>=1.0.1      # For your .env secrets
 pydantic>=2.10.0          # For strict data validation (Lead Schema)
 asyncio                   # For high-concurrency sending
 aiogram
+aiohttp
