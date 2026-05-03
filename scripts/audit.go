@@ -11,6 +11,8 @@ import (
 )
 
 type AuditReport struct {
+	Name			 string  `json:"name"`
+	Phone			 string  `json:"phone"`
 	URL              string  `json:"url"`
 	SSLExpired       bool    `json:"ssl_expired"`
 	LoadTimeSec      float64 `json:"load_time"`
@@ -19,14 +21,19 @@ type AuditReport struct {
 	FailureReason    string  `json:"failure_reason"`
 	IsBroken         bool    `json:"is_broken"`
 	StatusCode       int     `json:"status_code"`
+	Score			int     `json:"score"`
 }
 
-func PerformAudit(targetURL string) AuditReport {
+func PerformAudit(name, phone, targetURL string) AuditReport {
 	if targetURL == "" {
 		return AuditReport{NoWebsite: true, FailureReason: "No URL Provided"}
 	}
 
-	report := AuditReport{URL: targetURL}
+	if name == "" {
+		name = "Unknown Business"
+	}
+
+	report := AuditReport{URL: targetURL, Name: name, Phone: phone}
 	start := time.Now()
 
 	// 1. Setup Client
@@ -79,6 +86,9 @@ func PerformAudit(targetURL string) AuditReport {
 		report.IsBroken = true
 		report.FailureReason = fmt.Sprintf("HTTP %d Error", resp.StatusCode)
 	}
+
+	LeadScore := CalculateLeadScore(report)
+	report.Score = LeadScore
 
 	return report
 }

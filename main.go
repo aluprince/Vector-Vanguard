@@ -20,7 +20,7 @@ func main() {
 
 	for i := 0; i < len(leads); i++ {
 		fmt.Printf(">>> Loading... %d", i+1)
-		report := scripts.PerformAudit(leads[i].Website) // Performing audit on the Target URL
+		report := scripts.PerformAudit(leads[i].Name, leads[i].Phone, leads[i].Website) // Performing audit on the Target URL
 		allReports = append(allReports, report)
 		fmt.Printf(">> This is your report: %+v\n", report)
 		fmt.Printf(">>> Just Peformed Audit on this URL: %s", leads[i].Website)
@@ -43,3 +43,6 @@ func saveReport(reports []scripts.AuditReport) {
         fmt.Println("Error encoding JSON:", err)
     }
 }
+
+// Inside main.go
+// resp, _ := http.Post("http://localhost:5000/new_leads", "application/json", bytes.NewBuffer(jsonData))

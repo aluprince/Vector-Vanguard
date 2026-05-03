@@ -1,25 +1,33 @@
 [
   {
-    "url": "http://www.choicehospitalityng.com/",
+    "name": "",
+    "phone": "",
+    "url": "",
     "ssl_expired": false,
-    "load_time": 9.7148632,
+    "load_time": 0,
+    "outdated_copyright": false,
+    "no_website": true,
+    "failure_reason": "No URL Provided",
+    "is_broken": false,
+    "status_code": 0,
+    "score": 0
+  },
+  {
+    "name": "Icempire Residence",
+    "phone": "\n0816 396 4965",
+    "url": "https://icempireshortlet.com/",
+    "ssl_expired": false,
+    "load_time": 1.5694023000000001,
     "outdated_copyright": false,
     "no_website": false,
-    "failure_reason": "",
-    "is_broken": false,
-    "status_code": 200
+    "failure_reason": "HTTP 406 Error",
+    "is_broken": true,
+    "status_code": 406,
+    "score": 40
   },
   {
-    "url": "https://www.vtlsuites.com/",
-    "ssl_expired": false,
-    "load_time": 1.9378126,
-    "outdated_copyright": false,
-    "no_website": false,
-    "failure_reason": "",
-    "is_broken": false,
-    "status_code": 200
-  },
-  {
+    "name": "",
+    "phone": "",
     "url": "",
     "ssl_expired": false,
     "load_time": 0,
@@ -27,129 +35,12 @@
     "no_website": true,
     "failure_reason": "No URL Provided",
     "is_broken": false,
-    "status_code": 0
+    "status_code": 0,
+    "score": 0
   },
   {
-    "url": "",
-    "ssl_expired": false,
-    "load_time": 0,
-    "outdated_copyright": false,
-    "no_website": true,
-    "failure_reason": "No URL Provided",
-    "is_broken": false,
-    "status_code": 0
-  },
-  {
-    "url": "https://www.facebook.com/f7shortlet",
-    "ssl_expired": false,
-    "load_time": 2.5367584,
-    "outdated_copyright": false,
-    "no_website": false,
-    "failure_reason": "",
-    "is_broken": false,
-    "status_code": 200
-  },
-  {
-    "url": "https://shortletsandcribs.com/",
-    "ssl_expired": false,
-    "load_time": 0.958027,
-    "outdated_copyright": false,
-    "no_website": false,
-    "failure_reason": "",
-    "is_broken": false,
-    "status_code": 200
-  },
-  {
-    "url": "",
-    "ssl_expired": false,
-    "load_time": 0,
-    "outdated_copyright": false,
-    "no_website": true,
-    "failure_reason": "No URL Provided",
-    "is_broken": false,
-    "status_code": 0
-  },
-  {
-    "url": "",
-    "ssl_expired": false,
-    "load_time": 0,
-    "outdated_copyright": false,
-    "no_website": true,
-    "failure_reason": "No URL Provided",
-    "is_broken": false,
-    "status_code": 0
-  },
-  {
-    "url": "",
-    "ssl_expired": false,
-    "load_time": 0,
-    "outdated_copyright": false,
-    "no_website": true,
-    "failure_reason": "No URL Provided",
-    "is_broken": false,
-    "status_code": 0
-  },
-  {
-    "url": "",
-    "ssl_expired": false,
-    "load_time": 0,
-    "outdated_copyright": false,
-    "no_website": true,
-    "failure_reason": "No URL Provided",
-    "is_broken": false,
-    "status_code": 0
-  },
-  {
-    "url": "https://wa.me/2347067826403",
-    "ssl_expired": false,
-    "load_time": 5.4564236,
-    "outdated_copyright": false,
-    "no_website": false,
-    "failure_reason": "",
-    "is_broken": false,
-    "status_code": 200
-  },
-  {
-    "url": "https://wa.me/7045399640",
-    "ssl_expired": false,
-    "load_time": 1.7026381000000002,
-    "outdated_copyright": false,
-    "no_website": false,
-    "failure_reason": "",
-    "is_broken": false,
-    "status_code": 200
-  },
-  {
-    "url": "",
-    "ssl_expired": false,
-    "load_time": 0,
-    "outdated_copyright": false,
-    "no_website": true,
-    "failure_reason": "No URL Provided",
-    "is_broken": false,
-    "status_code": 0
-  },
-  {
-    "url": "",
-    "ssl_expired": false,
-    "load_time": 0,
-    "outdated_copyright": false,
-    "no_website": true,
-    "failure_reason": "No URL Provided",
-    "is_broken": false,
-    "status_code": 0
-  },
-  {
-    "url": "http://www.shortlethomes.net/",
-    "ssl_expired": false,
-    "load_time": 0.5807061,
-    "outdated_copyright": false,
-    "no_website": false,
-    "failure_reason": "",
-    "is_broken": false,
-    "status_code": 200
-  },
-  {
+    "name": "Shortletbytee Apartment Rentage",
+    "phone": "\n0905 166 6359",
     "url": "https://www.shortletbytee.com.ng/",
     "ssl_expired": false,
     "load_time": 0,
@@ -157,19 +48,25 @@
     "no_website": false,
     "failure_reason": "Timeout/Network Error",
     "is_broken": true,
-    "status_code": 0
+    "status_code": 0,
+    "score": 0
   },
   {
-    "url": "http://jostliving.com/",
+    "name": "F7 Shortlet Serviced Apartments in Lagos",
+    "phone": "\n0810 905 3773",
+    "url": "https://www.facebook.com/f7shortlet",
     "ssl_expired": false,
-    "load_time": 1.8022558,
+    "load_time": 1.2925817,
     "outdated_copyright": false,
     "no_website": false,
     "failure_reason": "",
     "is_broken": false,
-    "status_code": 200
+    "status_code": 200,
+    "score": 0
   },
   {
+    "name": "",
+    "phone": "",
     "url": "",
     "ssl_expired": false,
     "load_time": 0,
@@ -177,9 +74,51 @@
     "no_website": true,
     "failure_reason": "No URL Provided",
     "is_broken": false,
-    "status_code": 0
+    "status_code": 0,
+    "score": 0
   },
   {
+    "name": "Shortlets and Cribs",
+    "phone": "\n0703 558 9189",
+    "url": "https://shortletsandcribs.com/",
+    "ssl_expired": false,
+    "load_time": 1.3329708,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 0
+  },
+  {
+    "name": "Lusso Court Shortlet Apartment Ikeja",
+    "phone": "\n0704 700 1245",
+    "url": "http://www.lussocourt.com/",
+    "ssl_expired": false,
+    "load_time": 5.1471938,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 25
+  },
+  {
+    "name": "Guruz Shortlet Homes",
+    "phone": "\n0708 355 8639",
+    "url": "http://www.guruzlimited.com/",
+    "ssl_expired": false,
+    "load_time": 0,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "Timeout/Network Error",
+    "is_broken": true,
+    "status_code": 0,
+    "score": 0
+  },
+  {
+    "name": "",
+    "phone": "",
     "url": "",
     "ssl_expired": false,
     "load_time": 0,
@@ -187,9 +126,38 @@
     "no_website": true,
     "failure_reason": "No URL Provided",
     "is_broken": false,
-    "status_code": 0
+    "status_code": 0,
+    "score": 0
   },
   {
+    "name": "Luxury Shortlet Apartments in Lagos ~ Shortlets by Mullys Haven",
+    "phone": "\n0706 782 6403",
+    "url": "https://wa.me/2347067826403",
+    "ssl_expired": false,
+    "load_time": 1.8645758,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 0
+  },
+  {
+    "name": "SHORTLET APARTMENT IN CHEVRON LEKKI LAGOS",
+    "phone": "\n0704 539 9640",
+    "url": "https://wa.me/7045399640",
+    "ssl_expired": false,
+    "load_time": 1.0807077999999999,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 0
+  },
+  {
+    "name": "",
+    "phone": "",
     "url": "",
     "ssl_expired": false,
     "load_time": 0,
@@ -197,26 +165,124 @@
     "no_website": true,
     "failure_reason": "No URL Provided",
     "is_broken": false,
-    "status_code": 0
+    "status_code": 0,
+    "score": 0
   },
   {
+    "name": "",
+    "phone": "",
+    "url": "",
+    "ssl_expired": false,
+    "load_time": 0,
+    "outdated_copyright": false,
+    "no_website": true,
+    "failure_reason": "No URL Provided",
+    "is_broken": false,
+    "status_code": 0,
+    "score": 0
+  },
+  {
+    "name": "Shortlethomes - Kaplan's Short let Apartments in Lekki",
+    "phone": "\n0807 456 9853",
     "url": "http://www.shortlethomes.net/",
     "ssl_expired": false,
-    "load_time": 0.4220722,
+    "load_time": 4.227709,
     "outdated_copyright": false,
     "no_website": false,
     "failure_reason": "",
     "is_broken": false,
-    "status_code": 200
+    "status_code": 200,
+    "score": 0
   },
   {
+    "name": "Shortlet Apartments in Lagos - The Muse Apartment",
+    "phone": "\n0902 977 2543",
     "url": "https://www.museandhavenresidences.com.ng/",
     "ssl_expired": false,
-    "load_time": 1.2283932,
+    "load_time": 1.4004455,
     "outdated_copyright": false,
     "no_website": false,
     "failure_reason": "HTTP 403 Error",
     "is_broken": true,
-    "status_code": 403
+    "status_code": 403,
+    "score": 40
+  },
+  {
+    "name": "",
+    "phone": "",
+    "url": "",
+    "ssl_expired": false,
+    "load_time": 0,
+    "outdated_copyright": false,
+    "no_website": true,
+    "failure_reason": "No URL Provided",
+    "is_broken": false,
+    "status_code": 0,
+    "score": 0
+  },
+  {
+    "name": "",
+    "phone": "",
+    "url": "",
+    "ssl_expired": false,
+    "load_time": 0,
+    "outdated_copyright": false,
+    "no_website": true,
+    "failure_reason": "No URL Provided",
+    "is_broken": false,
+    "status_code": 0,
+    "score": 0
+  },
+  {
+    "name": "Shortlet Serviced Apartments by Jost Living",
+    "phone": "\n0806 780 4158",
+    "url": "http://jostliving.com/",
+    "ssl_expired": false,
+    "load_time": 2.6438873000000003,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 0
+  },
+  {
+    "name": "H.N.O Shortlet Apartment",
+    "phone": "\n0707 752 9216",
+    "url": "https://www.facebook.com/share/15xrWjNKSX/",
+    "ssl_expired": false,
+    "load_time": 2.208671,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 0
+  },
+  {
+    "name": "Shortlethomes - Lara's Luxury Short let Apartment",
+    "phone": "\n0812 340 6598",
+    "url": "http://www.shortlethomes.net/",
+    "ssl_expired": false,
+    "load_time": 0.5006074,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 0
+  },
+  {
+    "name": "Choice Short Let lagos",
+    "phone": "\n0703 677 0800",
+    "url": "http://www.choicehospitalityng.com/",
+    "ssl_expired": false,
+    "load_time": 7.7671484,
+    "outdated_copyright": false,
+    "no_website": false,
+    "failure_reason": "",
+    "is_broken": false,
+    "status_code": 200,
+    "score": 25
   }
 ]
