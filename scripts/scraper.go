@@ -48,7 +48,7 @@ func ScrapeLeads(searchQuery string) ([]Lead, error) {
 		
 		if err != nil {return nil, err }
 
-		for i := 0; i < 2; i++ { // use i < 10
+		for i := 0; i < 5; i++ { // use i < 10
     		fmt.Printf("Deep Scroll Cycle %d...\n", i+1)
     		err = chromedp.Run(ctx,
         		// Target the 'feed' role specifically and scroll it down 2000 pixels
